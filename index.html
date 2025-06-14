@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Krish Mishra - Aerospace Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1b4b 50%, #2d1b69 100%);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .orbitron {
+      font-family: 'Orbitron', monospace;
+    }
+
+    /* Animated Star Field */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Floating Rocket Animation */
+    .rocket {
+      position: fixed;
+      right: -100px;
+      animation: fly 15s linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes fly {
+      0% { 
+        right: -100px; 
+        bottom: 20%; 
+        transform: rotate(45deg);
+      }
+      100% { 
+        right: 100vw; 
+        bottom: 80%; 
+        transform: rotate(45deg);
+      }
+    }
+
+    /* Glowing Effects */
+    .glow {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .glow:hover {
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+      transform: translateY(-2px);
+    }
+
+    /* Card Hover Effects */
+    .card-hover {
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Particle Trail Effect */
+    .particle-trail {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #60a5fa;
+      border-radius: 50%;
+      animation: trail 3s linear infinite;
+    }
+
+    @keyframes trail {
+      0% { 
+        opacity: 1;
+        transform: translateX(0) translateY(0);
+      }
+      100% { 
+        opacity: 0;
+        transform: translateX(100px) translateY(-100px);
+      }
+    }
+
+    /* Navigation */
+    nav {
+      backdrop-filter: blur(20px);
+      background: rgba(10, 14, 39, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Hero Section */
+    .hero-bg {
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.3) 0%, rgba(10, 14, 39, 0.9) 70%);
+    }
+
+    /* Progress Bars */
+    .progress-bar {
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    /* Typing Animation */
+    .typing::after {
+      content: '|';
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* Button Animations */
+    .btn-space {
+      background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-space::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-space:hover::before {
+      left: 100%;
+    }
+
+    .btn-space:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Section Headers */
+    .section-header {
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-header::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Stars -->
+  <div class="stars" id="stars"></div>
+  
+  <!-- Floating Rocket -->
+  <div class="rocket">
+    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z" fill="#60a5fa"/>
+      <path d="M12 16L10 18L14 18L12 16Z" fill="#f59e0b"/>
+      <circle cx="8" cy="20" r="2" fill="#ef4444"/>
+      <circle cx="16" cy="20" r="2" fill="#ef4444"/>
+    </svg>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div class="orbitron text-2xl font-bold text-blue-400">KRISH</div>
+      <div class="flex space-x-8">
+        <a href="#about" class="hover:text-blue-400 transition-colors duration-300">About</a>
+        <a href="#experience" class="hover:text-blue-400 transition-colors duration-300">Experience</a>
+        <a href="#projects" class="hover:text-blue-400 transition-colors duration-300">Projects</a>
+        <a href="#contact" class="hover:text-blue-400 transition-colors duration-300">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center justify-center relative hero-bg">
+    <div class="text-center z-10 max-w-4xl mx-auto px-6">
+      <h2 class="text-xl text-blue-300 mb-4">Mission Control: Aerospace Engineer</h2>
+      <h1 class="orbitron text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent">
+        KRISH MISHRA
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-300 mb-8 typing">
+        Aerospace Engineering Undergraduate @ Georgia Tech
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button class="btn-space px-8 py-4 rounded-full text-lg font-semibold" onclick="downloadResume()">
+          🚀 Download Resume
+        </button>
+        <button class="border-2 border-blue-400 text-blue-400 px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-400 hover:text-white transition-all duration-300" onclick="scrollToSection('about')">
+          🛸 Explore Mission
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 relative z-10">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="orbitron text-4xl font-bold mb-8 section-header">Mission Brief</h2>
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="card-hover p-8 rounded-2xl">
+          <p class="text-lg leading-relaxed text-gray-300">
+            I'm Krish Mishra, a passionate Aerospace Engineering undergraduate at Georgia Tech. With hands-on experience at GE Aerospace and research work in collaboration with NASA and GTRI, I aim to revolutionize space logistics and propulsion systems. Fluent in multiple languages and skilled in engineering tools, I enjoy leading high-impact projects like guided rocketry and habitat deployment for Mars missions.
+          </p>
+        </div>
+        <div class="card-hover p-8 rounded-2xl">
+          <h3 class="orbitron text-2xl font-bold mb-6 text-blue-400">Skills</h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-2">
+                <span>Software</span>
+                <span>15%</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div class="progress-bar h-2 rounded-full" style="width: 95%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-2">
+                <span>Hardware</span>
+                <span>88%</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div class="progress-bar h-2 rounded-full" style="width: 88%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-2">
+                <span>Professional</span>
+                <span>92%</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div class="progress-bar h-2 rounded-full" style="width: 92%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="py-20 relative z-10">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="orbitron text-4xl font-bold mb-12 section-header">Flight Experience</h2>
+      <div class="space-y-8">
+        <div class="card-hover p-8 rounded-2xl relative overflow-hidden">
+          <div class="particle-trail" style="top: 20px; right: 20px;"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-4 h-4 bg-blue-500 rounded-full mr-4"></div>
+            <h3 class="text-2xl font-bold">Turbine Airfoils Intern</h3>
+          </div>
+          <p class="text-blue-400 mb-4 text-lg">GE Aerospace | May 2025 – Present</p>
+          <ul class="text-gray-300 space-y-2">
+            <li class="flex items-start">
+              <span class="text-blue-400 mr-2">▶</span>
+              Building multi-year strategy for machining equipment to meet future growth
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-400 mr-2">▶</span>
+              Implementing change management and optimizing legacy product strategies
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-hover p-8 rounded-2xl relative overflow-hidden">
+          <div class="particle-trail" style="top: 30px; right: 30px; animation-delay: 1s;"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-4 h-4 bg-purple-500 rounded-full mr-4"></div>
+            <h3 class="text-2xl font-bold">Manufacturing Engineering Intern</h3>
+          </div>
+          <p class="text-purple-400 mb-4 text-lg">GE Aerospace | May 2024 – Aug 2024</p>
+          <ul class="text-gray-300 space-y-2">
+            <li class="flex items-start">
+              <span class="text-purple-400 mr-2">▶</span>
+              Collaborated on LEAP engine inspection and evaluation
+            </li>
+            <li class="flex items-start">
+              <span class="text-purple-400 mr-2">▶</span>
+              Developed housing components and created value stream maps
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-hover p-8 rounded-2xl relative overflow-hidden">
+          <div class="particle-trail" style="top: 30px; right: 30px; animation-delay: 1s;"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-4 h-4 bg-purple-500 rounded-full mr-4"></div>
+            <h3 class="text-2xl font-bold"></h3>
+          </div>
+          <p class="text-purple-400 mb-4 text-lg">GE Aerospace | May 2024 – Aug 2024</p>
+          <ul class="text-gray-300 space-y-2">
+            <li class="flex items-start">
+              <span class="text-purple-400 mr-2">▶</span>
+              Collaborated on LEAP engine inspection and evaluation
+            </li>
+            <li class="flex items-start">
+              <span class="text-purple-400 mr-2">▶</span>
+              Developed housing components and created value stream maps
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-hover p-8 rounded-2xl relative overflow-hidden">
+          <div class="particle-trail" style="top: 40px; right: 40px; animation-delay: 2s;"></div>
+          <div class="flex items-center mb-4">
+            <div class="w-4 h-4 bg-green-500 rounded-full mr-4"></div>
+            <h3 class="text-2xl font-bold">Undergraduate Researcher</h3>
+          </div>
+          <p class="text-green-400 mb-4 text-lg">VIP M.A.R.S Program | Aug 2023 – Dec 2023</p>
+          <ul class="text-gray-300 space-y-2">
+            <li class="flex items-start">
+              <span class="text-green-400 mr-2">▶</span>
+              Collaborated with NASA-KSC, JPL, and GTRI for Mars mission logistics
+            </li>
+            <li class="flex items-start">
+              <span class="text-green-400 mr-2">▶</span>
+              Developed additive manufacturing procedures for habitat shielding
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-20 relative z-10">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="orbitron text-4xl font-bold mb-12 section-header">Mission Projects</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="card-hover p-8 rounded-2xl glow group cursor-pointer" onclick="showProjectDetails('gnc')">
+          <div class="text-4xl mb-4">🚀</div>
+          <h3 class="text-2xl font-bold mb-4 text-blue-400">Guidance, Navigation, and Control (GNC)</h3>
+          <p class="text-gray-300">Led a subteam of 20+ undergrads building gimbaled rockets; launched 3 times; developed jet vanes and recovery systems.</p>
+          <div class="mt-4 text-sm text-blue-300">Click to explore →</div>
+        </div>
+
+        <div class="card-hover p-8 rounded-2xl glow group cursor-pointer" onclick="showProjectDetails('hpr')">
+          <div class="text-4xl mb-4">🎯</div>
+          <h3 class="text-2xl font-bold mb-4 text-purple-400">High Power Rocketry</h3>
+          <p class="text-gray-300">Designed and built stable high-power model rocket; earned NAR Level 1 Certification.</p>
+          <div class="mt-4 text-sm text-purple-300">Click to explore →</div>
+        </div>
+
+        <div class="card-hover p-8 rounded-2xl glow group cursor-pointer" onclick="showProjectDetails('robotics')">
+          <div class="text-4xl mb-4">🤖</div>
+          <h3 class="text-2xl font-bold mb-4 text-green-400">FIRST Robotics</h3>
+          <p class="text-gray-300">2nd place at University of Waterloo; manufactured robotic parts using various materials and machinery.</p>
+          <div class="mt-4 text-sm text-green-300">Click to explore →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 relative z-10">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="orbitron text-4xl font-bold mb-12 section-header">Ground Control</h2>
+      <div class="card-hover p-12 rounded-2xl">
+        <p class="text-xl text-gray-300 mb-8">Ready to launch your next aerospace project? Let's connect and explore the possibilities.</p>
+        <div class="grid md:grid-cols-3 gap-8">
+          <a href="mailto:mishrakrish2004@gmail.com" class="block p-6 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 transition-all duration-300">
+            <div class="text-3xl mb-2">📧</div>
+            <div class="text-blue-400 font-semibold">Email</div>
+            <div class="text-sm text-gray-300">mishrakrish2004@gmail.com</div>
+          </a>
+          <a href="tel:+14705640065" class="block p-6 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 transition-all duration-300">
+            <div class="text-3xl mb-2">📱</div>
+            <div class="text-purple-400 font-semibold">Phone</div>
+            <div class="text-sm text-gray-300">+1 (470) 564-0065</div>
+          </a>
+          <a href="https://www.linkedin.com/in/krish-mishra-53a195220/" target="_blank" class="block p-6 rounded-xl bg-green-500/20 hover:bg-green-500/30 transition-all duration-300">
+            <div class="text-3xl mb-2">🔗</div>
+            <div class="text-green-400 font-semibold">LinkedIn</div>
+            <div class="text-sm text-gray-300">Connect with me</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 text-center border-t border-gray-700">
+    <p class="text-gray-400">&copy; 2025 Krish Mishra. All rights reserved. | Launching dreams into reality.</p>
+  </footer>
+
+  <script>
+    // Create animated stars
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const numberOfStars = 100;
+
+      for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = Math.random() * 3 + 1 + 'px';
+        star.style.height = star.style.width;
+        star.style.animationDelay = Math.random() * 2 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Smooth scrolling
+    function scrollToSection(sectionId) {
+      document.getElementById(sectionId).scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+    }
+
+    // Download resume function
+    function downloadResume() {
+      // In a real implementation, this would link to the actual resume file
+      alert('Resume download would be initiated here!');
+    }
+
+    // Project details modal (simplified)
+    function showProjectDetails(project) {
+      const details = {
+        gnc: 'Advanced guidance, navigation, and control systems for precision rocket flight.',
+        hpr: 'High-power rocketry with advanced recovery and stability systems.',
+        robotics: 'Competitive robotics with advanced manufacturing and control systems.'
+      };
+      alert(details[project]);
+    }
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero-bg');
+      if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      createStars();
+      
+      // Add typing animation
+      const typingElement = document.querySelector('.typing');
+      if (typingElement) {
+        const text = typingElement.textContent;
+        typingElement.textContent = '';
+        let i = 0;
+        const typeWriter = () => {
+          if (i < text.length) {
+            typingElement.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 100);
+          }
+        };
+        setTimeout(typeWriter, 1000);
+      }
+    });
+
+    // Navigation active state
+    window.addEventListener('scroll', () => {
+      const sections = ['about', 'experience', 'projects', 'contact'];
+      const navLinks = document.querySelectorAll('nav a');
+      
+      sections.forEach((section, index) => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            navLinks.forEach(link => link.classList.remove('text-blue-400'));
+            navLinks[index + 1]?.classList.add('text-blue-400');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
